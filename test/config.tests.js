@@ -422,7 +422,7 @@ describe('get config', () => {
         ...defaultConfig,
         secret: { key: '__test_session_secret__' },
       });
-    }, '"secret" must be one of [string, binary, array]');
+    }, '"secret" must be one of [string, array]');
   });
 
   it('should fail when app session cookie httpOnly is not a boolean', function () {
@@ -507,17 +507,12 @@ describe('get config', () => {
     assert.throws(
       () => getConfig({ ...defaultConfig, secret: 'short' }),
       TypeError,
-      '"secret" does not match any of the allowed types'
+      '"secret" length must be at least 8 characters long'
     );
     assert.throws(
       () => getConfig({ ...defaultConfig, secret: ['short', 'too'] }),
       TypeError,
-      '"secret[0]" does not match any of the allowed types'
-    );
-    assert.throws(
-      () => getConfig({ ...defaultConfig, secret: Buffer.from('short') }),
-      TypeError,
-      '"secret" must be at least 8 bytes'
+      '"secret[0]" length must be at least 8 characters long'
     );
   });
 
